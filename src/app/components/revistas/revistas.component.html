@@ -24,23 +24,23 @@
         </tr>
     </thead>
     <tbody>
-        <tr>
-            <th scope="row"></th>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
+        <tr *ngFor="let revista of revistasList">
+            <th scope="row">{{revista._id}}</th>
+            <td>{{revista.autor}}</td>
+            <td>{{revista.titulo}}</td>
+            <td>{{revista.edicion}}</td>
+            <td>{{revista.descripcion}}</td>
+            <td>{{revista.frecuenciaActual}}</td>
+            <td>{{revista.ejemplares}}</td>
+            <td>{{revista.temas}}</td>
+            <td>{{revista.palabrasClave}}</td>
+            <td>{{revista.copias}}</td>
+            <td>{{revista.disponibles}}</td>
             <td>
                 <div class="btn-group" role="group" aria-label="Basic outlined example">
-                    <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#verRevista"><i class="bi bi-eye-fill"></i> Ver</button>
-                    <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#editarRevista"><i class="bi bi-pencil-square"></i> Editar</button>
-                    <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#eliminarRevista"><i class="bi bi-trash-fill"></i> Eliminar</button>
+                    <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#verRevista" (click)="obtenerRevista(revista._id)"><i class="bi bi-eye-fill"></i> Ver</button>
+                    <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#editarRevista" (click)="obtenerRevista(revista._id)"><i class="bi bi-pencil-square"></i> Editar</button>
+                    <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#eliminarRevista" (click)="obtenerRevista(revista._id)"><i class="bi bi-trash-fill"></i> Eliminar</button>
                 </div>
             </td>
         </tr>
@@ -56,10 +56,61 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                ...
+                <form>
+                    <!-- AUTOR -->
+                    <div class="mb-3">
+                        <label for="inputAutor" class="form-label">Autor</label>
+                        <input type="text" class="form-control" id="inputAutor" name="autor" #autor='ngModel' [(ngModel)]="revistaModel.autor">
+                    </div>
+                    <!-- TITULO -->
+                    <div class="mb-3">
+                        <label for="inputTitulo" class="form-label">Titulo</label>
+                        <input type="text" class="form-control" id="inputTitulo" name="titulo" #titulo='ngModel' [(ngModel)]="revistaModel.titulo">
+                    </div>
+                    <!-- EDICION -->
+                    <div class="mb-3">
+                        <label for="inputEdicion" class="form-label">Edición</label>
+                        <input type="number" class="form-control" id="inputEdicion" name="edicion" #edicion='ngModel' [(ngModel)]="revistaModel.edicion">
+                    </div>
+                    <!-- DESCRIPCION -->
+                    <div class="mb-3">
+                        <label for="inputDescripcion" class="form-label">Descripción</label>
+                        <input type="text" class="form-control" id="inputDescripcion" name="descripcion" #descripcion='ngModel' [(ngModel)]="revistaModel.descripcion">
+                    </div>
+                    <!-- FRECUENCIA ACTUAL -->
+                    <div class="mb-3">
+                        <label for="inpurFrecuencia" class="form-label">Frecuencia actual</label>
+                        <input type="text" class="form-control" id="inpurFrecuencia" name="frecuenciaActual" #frecuenciaActual='ngModel' [(ngModel)]="revistaModel.frecuenciaActual">
+                    </div>
+                    <!-- EJEMPLARES -->
+                    <div class="mb-3">
+                        <label for="inputEjemplares" class="form-label">Ejemplares</label>
+                        <input type="number" class="form-control" id="inputEjemplares" name="ejemplares" #ejemplares='ngModel' [(ngModel)]="revistaModel.ejemplares">
+                    </div>
+                    <!-- TEMAS -->
+                    <div class="mb-3">
+                        <label for="inputTemas" class="form-label">Temas</label>
+                        <input type="text" class="form-control" id="inputTemas" name="temas" #temas='ngModel' [(ngModel)]="revistaModel.temas">
+                    </div>
+                    <!-- PALABRAS CLAVE -->
+                    <div class="mb-3">
+                        <label for="inputPalabras" class="form-label">Palabras clave</label>
+                        <input type="text" class="form-control" id="inputPalabras" name="palabrasClave" #palabrasClave='ngModel' [(ngModel)]="revistaModel.palabrasClave">
+                    </div>
+                    <!-- COPIAS -->
+                    <div class="mb-3">
+                        <label for="inputCopias" class="form-label">Copias</label>
+                        <input type="number" class="form-control" id="inputCopias" name="copias" #copias='ngModel' [(ngModel)]="revistaModel.copias">
+                    </div>
+                    <!-- DISPONIBLES -->
+                    <div class="mb-3">
+                        <label for="inputDisponibles" class="form-label">Disponibles</label>
+                        <input type="number" class="form-control" id="inputDisponibles" name="disponibles" #disponibles='ngModel' [(ngModel)]="revistaModel.disponibles">
+                    </div>
+                </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-success">Guardar</button>
+                <button type="button" class="btn btn-success" data-bs-dismiss="modal" (click)="crearRevista()">Guardar</button>
                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
             </div>
         </div>
@@ -75,7 +126,63 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                ...
+                <form>
+                    <!-- ID -->
+                    <div class="mb-3">
+                        <label for="inputID" class="form-label">ID</label>
+                        <input type="text" class="form-control" id="inputID" name="_id" #_id='ngModel' [(ngModel)]="revistaIDModel._id" disabled>
+                    </div>
+                    <!-- AUTOR -->
+                    <div class="mb-3">
+                        <label for="inputAutor" class="form-label">Autor</label>
+                        <input type="text" class="form-control" id="inputAutor" name="autor" #autor='ngModel' [(ngModel)]="revistaIDModel.autor" disabled>
+                    </div>
+                    <!-- TITULO -->
+                    <div class="mb-3">
+                        <label for="inputTitulo" class="form-label">Titulo</label>
+                        <input type="text" class="form-control" id="inputTitulo" name="titulo" #titulo='ngModel' [(ngModel)]="revistaIDModel.titulo" disabled>
+                    </div>
+                    <!-- EDICION -->
+                    <div class="mb-3">
+                        <label for="inputEdicion" class="form-label">Edición</label>
+                        <input type="number" class="form-control" id="inputEdicion" name="edicion" #edicion='ngModel' [(ngModel)]="revistaIDModel.edicion" disabled>
+                    </div>
+                    <!-- DESCRIPCION -->
+                    <div class="mb-3">
+                        <label for="inputDescripcion" class="form-label">Descripción</label>
+                        <input type="text" class="form-control" id="inputDescripcion" name="descripcion" #descripcion='ngModel' [(ngModel)]="revistaIDModel.descripcion" disabled>
+                    </div>
+                    <!-- FRECUENCIA ACTUAL -->
+                    <div class="mb-3">
+                        <label for="inpurFrecuencia" class="form-label">Frecuencia actual</label>
+                        <input type="text" class="form-control" id="inpurFrecuencia" name="frecuenciaActual" #frecuenciaActual='ngModel' [(ngModel)]="revistaIDModel.frecuenciaActual" disabled>
+                    </div>
+                    <!-- EJEMPLARES -->
+                    <div class="mb-3">
+                        <label for="inputEjemplares" class="form-label">Ejemplares</label>
+                        <input type="number" class="form-control" id="inputEjemplares" name="ejemplares" #ejemplares='ngModel' [(ngModel)]="revistaIDModel.ejemplares" disabled>
+                    </div>
+                    <!-- TEMAS -->
+                    <div class="mb-3">
+                        <label for="inputTemas" class="form-label">Temas</label>
+                        <input type="text" class="form-control" id="inputTemas" name="temas" #temas='ngModel' [(ngModel)]="revistaIDModel.temas" disabled>
+                    </div>
+                    <!-- PALABRAS CLAVE -->
+                    <div class="mb-3">
+                        <label for="inputPalabras" class="form-label">Palabras clave</label>
+                        <input type="text" class="form-control" id="inputPalabras" name="palabrasClave" #palabrasClave='ngModel' [(ngModel)]="revistaIDModel.palabrasClave" disabled>
+                    </div>
+                    <!-- COPIAS -->
+                    <div class="mb-3">
+                        <label for="inputCopias" class="form-label">Copias</label>
+                        <input type="number" class="form-control" id="inputCopias" name="copias" #copias='ngModel' [(ngModel)]="revistaIDModel.copias" disabled>
+                    </div>
+                    <!-- DISPONIBLES -->
+                    <div class="mb-3">
+                        <label for="inputDisponibles" class="form-label">Disponibles</label>
+                        <input type="number" class="form-control" id="inputDisponibles" name="disponibles" #disponibles='ngModel' [(ngModel)]="revistaIDModel.disponibles" disabled>
+                    </div>
+                </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
@@ -94,10 +201,66 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                ...
+                <form>
+                    <!-- ID -->
+                    <div class="mb-3">
+                        <label for="inputID" class="form-label">ID</label>
+                        <input type="text" class="form-control" id="inputID" name="_id" #_id='ngModel' [(ngModel)]="revistaIDModel._id" disabled>
+                    </div>
+                    <!-- AUTOR -->
+                    <div class="mb-3">
+                        <label for="inputAutor" class="form-label">Autor</label>
+                        <input type="text" class="form-control" id="inputAutor" name="autor" #autor='ngModel' [(ngModel)]="revistaIDModel.autor">
+                    </div>
+                    <!-- TITULO -->
+                    <div class="mb-3">
+                        <label for="inputTitulo" class="form-label">Titulo</label>
+                        <input type="text" class="form-control" id="inputTitulo" name="titulo" #titulo='ngModel' [(ngModel)]="revistaIDModel.titulo">
+                    </div>
+                    <!-- EDICION -->
+                    <div class="mb-3">
+                        <label for="inputEdicion" class="form-label">Edición</label>
+                        <input type="number" class="form-control" id="inputEdicion" name="edicion" #edicion='ngModel' [(ngModel)]="revistaIDModel.edicion">
+                    </div>
+                    <!-- DESCRIPCION -->
+                    <div class="mb-3">
+                        <label for="inputDescripcion" class="form-label">Descripción</label>
+                        <input type="text" class="form-control" id="inputDescripcion" name="descripcion" #descripcion='ngModel' [(ngModel)]="revistaIDModel.descripcion">
+                    </div>
+                    <!-- FRECUENCIA ACTUAL -->
+                    <div class="mb-3">
+                        <label for="inpurFrecuencia" class="form-label">Frecuencia actual</label>
+                        <input type="text" class="form-control" id="inpurFrecuencia" name="frecuenciaActual" #frecuenciaActual='ngModel' [(ngModel)]="revistaIDModel.frecuenciaActual">
+                    </div>
+                    <!-- EJEMPLARES -->
+                    <div class="mb-3">
+                        <label for="inputEjemplares" class="form-label">Ejemplares</label>
+                        <input type="number" class="form-control" id="inputEjemplares" name="ejemplares" #ejemplares='ngModel' [(ngModel)]="revistaIDModel.ejemplares">
+                    </div>
+                    <!-- TEMAS -->
+                    <div class="mb-3">
+                        <label for="inputTemas" class="form-label">Temas</label>
+                        <input type="text" class="form-control" id="inputTemas" name="temas" #temas='ngModel' [(ngModel)]="revistaIDModel.temas">
+                    </div>
+                    <!-- PALABRAS CLAVE -->
+                    <div class="mb-3">
+                        <label for="inputPalabras" class="form-label">Palabras clave</label>
+                        <input type="text" class="form-control" id="inputPalabras" name="palabrasClave" #palabrasClave='ngModel' [(ngModel)]="revistaIDModel.palabrasClave">
+                    </div>
+                    <!-- COPIAS -->
+                    <div class="mb-3">
+                        <label for="inputCopias" class="form-label">Copias</label>
+                        <input type="number" class="form-control" id="inputCopias" name="copias" #copias='ngModel' [(ngModel)]="revistaIDModel.copias">
+                    </div>
+                    <!-- DISPONIBLES -->
+                    <div class="mb-3">
+                        <label for="inputDisponibles" class="form-label">Disponibles</label>
+                        <input type="number" class="form-control" id="inputDisponibles" name="disponibles" #disponibles='ngModel' [(ngModel)]="revistaIDModel.disponibles">
+                    </div>
+                </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-success">Guardar cambios</button>
+                <button type="button" class="btn btn-success" data-bs-dismiss="modal" (click)="modificarRevista()">Guardar cambios</button>
                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
             </div>
         </div>
@@ -113,9 +276,85 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                ...
+                <form>
+                    <!-- ID -->
+                    <div class="mb-3">
+                        <label for="inputID" class="form-label">ID</label>
+                        <input type="text" class="form-control" id="inputID" name="_id" #_id='ngModel' [(ngModel)]="revistaIDModel._id" disabled>
+                    </div>
+                    <!-- AUTOR -->
+                    <div class="mb-3">
+                        <label for="inputAutor" class="form-label">Autor</label>
+                        <input type="text" class="form-control" id="inputAutor" name="autor" #autor='ngModel' [(ngModel)]="revistaIDModel.autor" disabled>
+                    </div>
+                    <!-- TITULO -->
+                    <div class="mb-3">
+                        <label for="inputTitulo" class="form-label">Titulo</label>
+                        <input type="text" class="form-control" id="inputTitulo" name="titulo" #titulo='ngModel' [(ngModel)]="revistaIDModel.titulo" disabled>
+                    </div>
+                    <!-- EDICION -->
+                    <div class="mb-3">
+                        <label for="inputEdicion" class="form-label">Edición</label>
+                        <input type="number" class="form-control" id="inputEdicion" name="edicion" #edicion='ngModel' [(ngModel)]="revistaIDModel.edicion" disabled>
+                    </div>
+                    <!-- DESCRIPCION -->
+                    <div class="mb-3">
+                        <label for="inputDescripcion" class="form-label">Descripción</label>
+                        <input type="text" class="form-control" id="inputDescripcion" name="descripcion" #descripcion='ngModel' [(ngModel)]="revistaIDModel.descripcion" disabled>
+                    </div>
+                    <!-- FRECUENCIA ACTUAL -->
+                    <div class="mb-3">
+                        <label for="inpurFrecuencia" class="form-label">Frecuencia actual</label>
+                        <input type="text" class="form-control" id="inpurFrecuencia" name="frecuenciaActual" #frecuenciaActual='ngModel' [(ngModel)]="revistaIDModel.frecuenciaActual" disabled>
+                    </div>
+                    <!-- EJEMPLARES -->
+                    <div class="mb-3">
+                        <label for="inputEjemplares" class="form-label">Ejemplares</label>
+                        <input type="number" class="form-control" id="inputEjemplares" name="ejemplares" #ejemplares='ngModel' [(ngModel)]="revistaIDModel.ejemplares" disabled>
+                    </div>
+                    <!-- TEMAS -->
+                    <div class="mb-3">
+                        <label for="inputTemas" class="form-label">Temas</label>
+                        <input type="text" class="form-control" id="inputTemas" name="temas" #temas='ngModel' [(ngModel)]="revistaIDModel.temas" disabled>
+                    </div>
+                    <!-- PALABRAS CLAVE -->
+                    <div class="mb-3">
+                        <label for="inputPalabras" class="form-label">Palabras clave</label>
+                        <input type="text" class="form-control" id="inputPalabras" name="palabrasClave" #palabrasClave='ngModel' [(ngModel)]="revistaIDModel.palabrasClave" disabled>
+                    </div>
+                    <!-- COPIAS -->
+                    <div class="mb-3">
+                        <label for="inputCopias" class="form-label">Copias</label>
+                        <input type="number" class="form-control" id="inputCopias" name="copias" #copias='ngModel' [(ngModel)]="revistaIDModel.copias" disabled>
+                    </div>
+                    <!-- DISPONIBLES -->
+                    <div class="mb-3">
+                        <label for="inputDisponibles" class="form-label">Disponibles</label>
+                        <input type="number" class="form-control" id="inputDisponibles" name="disponibles" #disponibles='ngModel' [(ngModel)]="revistaIDModel.disponibles" disabled>
+                    </div>
+                </form>
             </div>
             <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#emergenteEliminar">Eliminar</button>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL EMERGENTE ELIMINAR USUARIO -->
+<div class="modal fade" id="emergenteEliminar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Confirmación de eliminación</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                ¿Está seguro de eliminar la revista "<strong>{{ revistaIDModel.titulo }}</strong>"?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-bs-dismiss="modal" (click)='eliminarRevista(revistaIDModel._id)'>Eliminar</button>
                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
             </div>
         </div>
