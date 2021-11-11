@@ -3,7 +3,6 @@ import { Observable } from 'rxjs';
 import { GLOBAL } from './global.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Usuario } from '../models/usuario.model';
-import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +12,7 @@ export class UsuarioService {
   public headersVariable = new HttpHeaders().set('Content-Type', 'application/json');
   public token: any;
 
-  constructor(private http: HttpClient, private router: Router) {
+  constructor(private http: HttpClient) {
     this.ruta = GLOBAL.url;
   }
 

@@ -22,21 +22,21 @@
         </tr>
     </thead>
     <tbody>
-        <tr>
-            <th scope="row"></th>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
+        <tr *ngFor="let libro of librosList">
+            <th scope="row">{{libro._id}}</th>
+            <td>{{libro.autor}}</td>
+            <td>{{libro.titulo}}</td>
+            <td>{{libro.edicion}}</td>
+            <td>{{libro.palabrasClave}}</td>
+            <td>{{libro.descripcion}}</td>
+            <td>{{libro.temas}}</td>
+            <td>{{libro.copias}}</td>
+            <td>{{libro.disponibles}}</td>
             <td>
                 <div class="btn-group" role="group" aria-label="Basic outlined example">
-                    <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#verLibro"><i class="bi bi-eye-fill"></i> Ver</button>
-                    <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#editarLibro"><i class="bi bi-pencil-square"></i> Editar</button>
-                    <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#eliminarLibro"><i class="bi bi-trash-fill"></i> Eliminar</button>
+                    <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#verLibro" (click)="obtenerLibro(libro._id)"><i class="bi bi-eye-fill"></i> Ver</button>
+                    <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#editarLibro" (click)="obtenerLibro(libro._id)"><i class="bi bi-pencil-square"></i> Editar</button>
+                    <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#eliminarLibro" (click)="obtenerLibro(libro._id)"><i class="bi bi-trash-fill"></i> Eliminar</button>
                 </div>
             </td>
         </tr>
@@ -52,10 +52,51 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                ...
+                <form>
+                    <!-- AUTOR -->
+                    <div class="mb-3">
+                        <label for="inputAutor" class="form-label">Autor</label>
+                        <input type="text" class="form-control" id="inputAutor" name="autor" #autor='ngModel' [(ngModel)]="libroModel.autor">
+                    </div>
+                    <!-- TITULO -->
+                    <div class="mb-3">
+                        <label for="inputTitulo" class="form-label">Título</label>
+                        <input type="text" class="form-control" id="inputTitulo" name="titulo" #titulo='ngModel' [(ngModel)]="libroModel.titulo">
+                    </div>
+                    <!-- EDICION -->
+                    <div class="mb-3">
+                        <label for="inputEdicion" class="form-label">Edición</label>
+                        <input type="number" class="form-control" id="inputEdicion" name="edicion" #edicion='ngModel' [(ngModel)]="libroModel.edicion">
+                    </div>
+                    <!-- PALABRAS CLAVE -->
+                    <div class="mb-3">
+                        <label for="inputPalabras" class="form-label">Palabras clave</label>
+                        <input type="text" class="form-control" id="inputPalabras" name="palabrasClave" #palabrasClave='ngModel' [(ngModel)]="libroModel.palabrasClave">
+                    </div>
+                    <!-- DESCRIPCION -->
+                    <div class="mb-3">
+                        <label for="inputDescripcion" class="form-label">Descripcion</label>
+                        <input type="text" class="form-control" id="inputDescripcion" name="descripcion" #descripcion='ngModel' [(ngModel)]="libroModel.descripcion">
+                    </div>
+                    <!-- TEMAS -->
+                    <div class="mb-3">
+                        <label for="inputTemas" class="form-label">Temas</label>
+                        <input type="text" class="form-control" id="inputTemas" name="temas" #temas='ngModel' [(ngModel)]="libroModel.temas">
+                    </div>
+                    <!-- COPIAS -->
+                    <div class="mb-3">
+                        <label for="inputCopias" class="form-label">Copias</label>
+                        <input type="number" class="form-control" id="inputCopias" name="copias" #copias='ngModel' [(ngModel)]="libroModel.copias">
+                    </div>
+                    <!-- DISPONIBLES -->
+                    <div class="mb-3">
+                        <label for="inputDisponibles" class="form-label">Disponibles</label>
+                        <input type="number" class="form-control" id="inputDisponibles" name="disponibles" #disponibles='ngModel' [(ngModel)]="libroModel.disponibles">
+                    </div>
+                </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-success">Guardar</button>
+                <button type="button" class="btn btn-success" data-bs-dismiss="modal" (click)="crearLibro()">Guardar</button>
                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
             </div>
         </div>
@@ -71,7 +112,53 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                ...
+                <form>
+                    <!-- ID -->
+                    <div class="mb-3">
+                        <label for="inputID" class="form-label">ID</label>
+                        <input type="text" class="form-control" id="inputID" name="_id" #_id='ngModel' [(ngModel)]="libroIDModel._id" disabled>
+                    </div>
+                    <!-- AUTOR -->
+                    <div class="mb-3">
+                        <label for="inputAutor" class="form-label">Autor</label>
+                        <input type="text" class="form-control" id="inputAutor" name="autor" #autor='ngModel' [(ngModel)]="libroIDModel.autor" disabled>
+                    </div>
+                    <!-- TITULO -->
+                    <div class="mb-3">
+                        <label for="inputTitulo" class="form-label">Título</label>
+                        <input type="text" class="form-control" id="inputTitulo" name="titulo" #titulo='ngModel' [(ngModel)]="libroIDModel.titulo" disabled>
+                    </div>
+                    <!-- EDICION -->
+                    <div class="mb-3">
+                        <label for="inputEdicion" class="form-label">Edición</label>
+                        <input type="number" class="form-control" id="inputEdicion" name="edicion" #edicion='ngModel' [(ngModel)]="libroIDModel.edicion" disabled>
+                    </div>
+                    <!-- PALABRAS CLAVE -->
+                    <div class="mb-3">
+                        <label for="inputPalabras" class="form-label">Palabras clave</label>
+                        <input type="text" class="form-control" id="inputPalabras" name="palabrasClave" #palabrasClave='ngModel' [(ngModel)]="libroIDModel.palabrasClave" disabled>
+                    </div>
+                    <!-- DESCRIPCION -->
+                    <div class="mb-3">
+                        <label for="inputDescripcion" class="form-label">Descripcion</label>
+                        <input type="text" class="form-control" id="inputDescripcion" name="descripcion" #descripcion='ngModel' [(ngModel)]="libroIDModel.descripcion" disabled>
+                    </div>
+                    <!-- TEMAS -->
+                    <div class="mb-3">
+                        <label for="inputTemas" class="form-label">Temas</label>
+                        <input type="text" class="form-control" id="inputTemas" name="temas" #temas='ngModel' [(ngModel)]="libroIDModel.temas" disabled>
+                    </div>
+                    <!-- COPIAS -->
+                    <div class="mb-3">
+                        <label for="inputCopias" class="form-label">Copias</label>
+                        <input type="number" class="form-control" id="inputCopias" name="copias" #copias='ngModel' [(ngModel)]="libroIDModel.copias" disabled>
+                    </div>
+                    <!-- DISPONIBLES -->
+                    <div class="mb-3">
+                        <label for="inputDisponibles" class="form-label">Disponibles</label>
+                        <input type="number" class="form-control" id="inputDisponibles" name="disponibles" #disponibles='ngModel' [(ngModel)]="libroIDModel.disponibles" disabled>
+                    </div>
+                </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
@@ -90,10 +177,56 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                ...
+                <form>
+                    <!-- ID -->
+                    <div class="mb-3">
+                        <label for="inputID" class="form-label">ID</label>
+                        <input type="text" class="form-control" id="inputID" name="_id" #_id='ngModel' [(ngModel)]="libroIDModel._id" disabled>
+                    </div>
+                    <!-- AUTOR -->
+                    <div class="mb-3">
+                        <label for="inputAutor" class="form-label">Autor</label>
+                        <input type="text" class="form-control" id="inputAutor" name="autor" #autor='ngModel' [(ngModel)]="libroIDModel.autor">
+                    </div>
+                    <!-- TITULO -->
+                    <div class="mb-3">
+                        <label for="inputTitulo" class="form-label">Título</label>
+                        <input type="text" class="form-control" id="inputTitulo" name="titulo" #titulo='ngModel' [(ngModel)]="libroIDModel.titulo">
+                    </div>
+                    <!-- EDICION -->
+                    <div class="mb-3">
+                        <label for="inputEdicion" class="form-label">Edición</label>
+                        <input type="number" class="form-control" id="inputEdicion" name="edicion" #edicion='ngModel' [(ngModel)]="libroIDModel.edicion">
+                    </div>
+                    <!-- PALABRAS CLAVE -->
+                    <div class="mb-3">
+                        <label for="inputPalabras" class="form-label">Palabras clave</label>
+                        <input type="text" class="form-control" id="inputPalabras" name="palabrasClave" #palabrasClave='ngModel' [(ngModel)]="libroIDModel.palabrasClave">
+                    </div>
+                    <!-- DESCRIPCION -->
+                    <div class="mb-3">
+                        <label for="inputDescripcion" class="form-label">Descripcion</label>
+                        <input type="text" class="form-control" id="inputDescripcion" name="descripcion" #descripcion='ngModel' [(ngModel)]="libroIDModel.descripcion">
+                    </div>
+                    <!-- TEMAS -->
+                    <div class="mb-3">
+                        <label for="inputTemas" class="form-label">Temas</label>
+                        <input type="text" class="form-control" id="inputTemas" name="temas" #temas='ngModel' [(ngModel)]="libroIDModel.temas">
+                    </div>
+                    <!-- COPIAS -->
+                    <div class="mb-3">
+                        <label for="inputCopias" class="form-label">Copias</label>
+                        <input type="number" class="form-control" id="inputCopias" name="copias" #copias='ngModel' [(ngModel)]="libroIDModel.copias">
+                    </div>
+                    <!-- DISPONIBLES -->
+                    <div class="mb-3">
+                        <label for="inputDisponibles" class="form-label">Disponibles</label>
+                        <input type="number" class="form-control" id="inputDisponibles" name="disponibles" #disponibles='ngModel' [(ngModel)]="libroIDModel.disponibles">
+                    </div>
+                </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-success">Guardar cambios</button>
+                <button type="button" class="btn btn-success" data-bs-dismiss="modal" (click)="modificarLibro()">Guardar cambios</button>
                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
             </div>
         </div>
@@ -109,9 +242,75 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                ...
+                <form>
+                    <!-- ID -->
+                    <div class="mb-3">
+                        <label for="inputID" class="form-label">ID</label>
+                        <input type="text" class="form-control" id="inputID" name="_id" #_id='ngModel' [(ngModel)]="libroIDModel._id" disabled>
+                    </div>
+                    <!-- AUTOR -->
+                    <div class="mb-3">
+                        <label for="inputAutor" class="form-label">Autor</label>
+                        <input type="text" class="form-control" id="inputAutor" name="autor" #autor='ngModel' [(ngModel)]="libroIDModel.autor" disabled>
+                    </div>
+                    <!-- TITULO -->
+                    <div class="mb-3">
+                        <label for="inputTitulo" class="form-label">Título</label>
+                        <input type="text" class="form-control" id="inputTitulo" name="titulo" #titulo='ngModel' [(ngModel)]="libroIDModel.titulo" disabled>
+                    </div>
+                    <!-- EDICION -->
+                    <div class="mb-3">
+                        <label for="inputEdicion" class="form-label">Edición</label>
+                        <input type="number" class="form-control" id="inputEdicion" name="edicion" #edicion='ngModel' [(ngModel)]="libroIDModel.edicion" disabled>
+                    </div>
+                    <!-- PALABRAS CLAVE -->
+                    <div class="mb-3">
+                        <label for="inputPalabras" class="form-label">Palabras clave</label>
+                        <input type="text" class="form-control" id="inputPalabras" name="palabrasClave" #palabrasClave='ngModel' [(ngModel)]="libroIDModel.palabrasClave" disabled>
+                    </div>
+                    <!-- DESCRIPCION -->
+                    <div class="mb-3">
+                        <label for="inputDescripcion" class="form-label">Descripcion</label>
+                        <input type="text" class="form-control" id="inputDescripcion" name="descripcion" #descripcion='ngModel' [(ngModel)]="libroIDModel.descripcion" disabled>
+                    </div>
+                    <!-- TEMAS -->
+                    <div class="mb-3">
+                        <label for="inputTemas" class="form-label">Temas</label>
+                        <input type="text" class="form-control" id="inputTemas" name="temas" #temas='ngModel' [(ngModel)]="libroIDModel.temas" disabled>
+                    </div>
+                    <!-- COPIAS -->
+                    <div class="mb-3">
+                        <label for="inputCopias" class="form-label">Copias</label>
+                        <input type="number" class="form-control" id="inputCopias" name="copias" #copias='ngModel' [(ngModel)]="libroIDModel.copias" disabled>
+                    </div>
+                    <!-- DISPONIBLES -->
+                    <div class="mb-3">
+                        <label for="inputDisponibles" class="form-label">Disponibles</label>
+                        <input type="number" class="form-control" id="inputDisponibles" name="disponibles" #disponibles='ngModel' [(ngModel)]="libroIDModel.disponibles" disabled>
+                    </div>
+                </form>
             </div>
             <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#emergenteEliminar">Eliminar</button>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL EMERGENTE ELIMINAR LIBRO -->
+<div class="modal fade" id="emergenteEliminar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Confirmación de eliminación</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                ¿Está seguro de eliminar el libro "<strong>{{ libroIDModel.titulo }}</strong>"?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-bs-dismiss="modal" (click)='eliminarLibro(libroIDModel._id)'>Eliminar</button>
                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
             </div>
         </div>

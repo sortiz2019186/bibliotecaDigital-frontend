@@ -8,18 +8,18 @@ import { LoginComponent } from './components/login/login.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { UsuariosComponent } from './components/usuarios/usuarios.component';
-import { LibrosComponent } from './components/libros/libros.component';
 import { RevistasComponent } from './components/revistas/revistas.component';
 import { AuthGuard } from "./auth.guard";
+import { LibrosComponent } from './components/libros/libros.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     LoginComponent,
+    RevistasComponent,
     UsuariosComponent,
     LibrosComponent,
-    RevistasComponent
   ],
   imports: [
     BrowserModule,
