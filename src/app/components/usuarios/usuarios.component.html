@@ -1,0 +1,278 @@
+<div>
+    <h1>Usuarios</h1>
+</div>
+
+<div class="my-2">
+    <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#agregarUsuario"><i class="bi bi-person-plus-fill"></i> Agregar usuario</button>
+</div>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Carnet/CUI</th>
+            <th scope="col">Nombres</th>
+            <th scope="col">Apellidos</th>
+            <th scope="col">Username</th>
+            <th scope="col">Rol</th>
+            <th scope="col">Correo</th>
+            <th scope="col">Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let usuario of usuariosList">
+            <th scope="row">{{ usuario._id }}</th>
+            <td>{{ usuario.carnetCUI }}</td>
+            <td>{{ usuario.nombres }}</td>
+            <td>{{ usuario.apellidos }}</td>
+            <td>{{ usuario.username }}</td>
+            <td>{{ usuario.rol }}</td>
+            <td>{{ usuario.email }}</td>
+            <td>
+                <div class="btn-group" role="group" aria-label="Basic outlined example">
+                    <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#verUsuario" (click)="obtenerUsuario(usuario._id)"><i class="bi bi-eye-fill"></i> Ver</button>
+                    <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#editarUsuario" (click)="obtenerUsuario(usuario._id)"><i class="bi bi-pencil-square"></i> Editar</button>
+                    <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#eliminarUsuario" (click)="obtenerUsuario(usuario._id)"><i class="bi bi-trash-fill"></i> Eliminar</button>
+                </div>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<!-- MODAL AGREGAR USUARIO -->
+<div class="modal fade" id="agregarUsuario" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Agregar usuario</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <!-- CARNET/CUI -->
+                    <div class="mb-3">
+                        <label for="inputCarnetCUI" class="form-label">Carnet/CUI</label>
+                        <input type="number" class="form-control" id="inputCarnetCUI" name="carnetCUI" #carnetCUI='ngModel' [(ngModel)]="usuarioModel.carnetCUI">
+                    </div>
+                    <!-- NOMBRES -->
+                    <div class="mb-3">
+                        <label for="inputNombres" class="form-label">Nombres</label>
+                        <input type="text" class="form-control" id="inputNombres" name="nombres" #nombres='ngModel' [(ngModel)]="usuarioModel.nombres">
+                    </div>
+                    <!-- APELLIDOS -->
+                    <div class="mb-3">
+                        <label for="inputApellidos" class="form-label">Apellidos</label>
+                        <input type="text" class="form-control" id="inputApellidos" name="apellidos" #apellidos='ngModel' [(ngModel)]="usuarioModel.apellidos">
+                    </div>
+                    <!-- USERNAME -->
+                    <div class="mb-3">
+                        <label for="inputUsername" class="form-label">Username</label>
+                        <input type="text" class="form-control" id="inputUsername" name="username" #username='ngModel' [(ngModel)]="usuarioModel.username">
+                    </div>
+                    <!-- ROL -->
+                    <div class="mb-3">
+                        <label for="inputRol" class="form-label">Rol</label>
+                        <input type="text" class="form-control" id="inputRol" name="rol" #rol='ngModel' [(ngModel)]="usuarioModel.rol">
+                    </div>
+                    <!-- CORREO -->
+                    <div class="mb-3">
+                        <label for="inputCorreo" class="form-label">Correo</label>
+                        <input type="email" class="form-control" id="inputCorreo" name="email" #email='ngModel' [(ngModel)]="usuarioModel.email">
+                    </div>
+                    <!-- PASSWORD -->
+                    <div class="mb-3">
+                        <label for="inputPassword" class="form-label">Contraseña</label>
+                        <input type="password" class="form-control" id="inputPassword" name="password" #password='ngModel' [(ngModel)]="usuarioModel.password">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" (click)="crearUsuario()" data-bs-dismiss="modal">Guardar</button>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL VER USUARIO -->
+<div class="modal fade" id="verUsuario" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Ver usuario</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <!-- ID -->
+                    <div class="mb-3">
+                        <label for="inputID" class="form-label">ID</label>
+                        <input type="text" class="form-control" id="inputID" name="_id" #_id='ngModel' [(ngModel)]="usuarioIDModel._id" disabled>
+                    </div>
+                    <!-- CARNET/CUI -->
+                    <div class="mb-3">
+                        <label for="inputCarnet" class="form-label">Carnet/CUI</label>
+                        <input type="number" class="form-control" id="inputCarnet" name="carnetCUI" #carnetCUI='ngModel' [(ngModel)]="usuarioIDModel.carnetCUI" disabled>
+                    </div>
+                    <!-- NOMBRES -->
+                    <div class="mb-3">
+                        <label for="inputNombress" class="form-label">Nombres</label>
+                        <input type="text" class="form-control" id="inputNombress" name="nombres" #nombres='ngModel' [(ngModel)]="usuarioIDModel.nombres" disabled>
+                    </div>
+                    <!-- APELLIDOS -->
+                    <div class="mb-3">
+                        <label for="inputApellidoss" class="form-label">Apellidos</label>
+                        <input type="text" class="form-control" id="inputApellidoss" name="apellidos" #apellidos='ngModel' [(ngModel)]="usuarioIDModel.apellidos" disabled>
+                    </div>
+                    <!-- USERNAME -->
+                    <div class="mb-3">
+                        <label for="inputUsernamee" class="form-label">Username</label>
+                        <input type="text" class="form-control" id="inputUsernamee" name="username" #username='ngModel' [(ngModel)]="usuarioIDModel.username" disabled>
+                    </div>
+                    <!-- ROL -->
+                    <div class="mb-3">
+                        <label for="inputRole" class="form-label">Rol</label>
+                        <input type="text" class="form-control" id="inputRole" name="rol" #rol='ngModel' [(ngModel)]="usuarioIDModel.rol" disabled>
+                    </div>
+                    <!-- CORREO -->
+                    <div class="mb-3">
+                        <label for="inputCorreoo" class="form-label">Correo</label>
+                        <input type="email" class="form-control" id="inputCorreoo" name="email" #email='ngModel' [(ngModel)]="usuarioIDModel.email" disabled>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL EDITAR USUARIO -->
+<div class="modal fade" id="editarUsuario" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Editar usuario</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <!-- ID -->
+                    <div class="mb-3">
+                        <label for="inputIDD" class="form-label">ID</label>
+                        <input type="text" class="form-control" id="inputIDD" name="_id" #_id='ngModel' [(ngModel)]="usuarioIDModel._id" disabled>
+                    </div>
+                    <!-- CARNET/CUI -->
+                    <div class="mb-3">
+                        <label for="inputCarnetCUII" class="form-label">Carnet/CUI</label>
+                        <input type="number" class="form-control" id="inputCarnetCUII" name="carnetCUI" #carnetCUI='ngModel' [(ngModel)]="usuarioIDModel.carnetCUI">
+                    </div>
+                    <!-- NOMBRES -->
+                    <div class="mb-3">
+                        <label for="inputNombres1" class="form-label">Nombres</label>
+                        <input type="text" class="form-control" id="inputNombres1" name="nombres" #nombres='ngModel' [(ngModel)]="usuarioIDModel.nombres">
+                    </div>
+                    <!-- APELLIDOS -->
+                    <div class="mb-3">
+                        <label for="inputApellidos1" class="form-label">Apellidos</label>
+                        <input type="text" class="form-control" id="inputApellidos1" name="apellidos" #apellidos='ngModel' [(ngModel)]="usuarioIDModel.apellidos">
+                    </div>
+                    <!-- USERNAME -->
+                    <div class="mb-3">
+                        <label for="inputUsername1" class="form-label">Username</label>
+                        <input type="text" class="form-control" id="inputUsername1" name="username" #username='ngModel' [(ngModel)]="usuarioIDModel.username">
+                    </div>
+                    <!-- ROL -->
+                    <div class="mb-3">
+                        <label for="inputRol1" class="form-label">Rol</label>
+                        <input type="text" class="form-control" id="inputRol1" name="rol" #rol='ngModel' [(ngModel)]="usuarioIDModel.rol">
+                    </div>
+                    <!-- CORREO -->
+                    <div class="mb-3">
+                        <label for="inputCorreo1" class="form-label">Correo</label>
+                        <input type="email" class="form-control" id="inputCorreo1" name="email" #email='ngModel' [(ngModel)]="usuarioIDModel.email">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" (click)="modificarUsuario()" data-bs-dismiss="modal">Guardar cambios</button>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL ELIMINAR USUARIO -->
+<div class="modal fade" id="eliminarUsuario" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Eliminar usuario</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <!-- ID -->
+                    <div class="mb-3">
+                        <label for="inputID2" class="form-label">ID</label>
+                        <input type="text" class="form-control" id="inputID2" name="_id" #_id='ngModel' [(ngModel)]="usuarioIDModel._id" disabled>
+                    </div>
+                    <!-- CARNET/CUI -->
+                    <div class="mb-3">
+                        <label for="inputCarnetCUI2" class="form-label">Carnet/CUI</label>
+                        <input type="number" class="form-control" id="inputCarnetCUI2" name="carnetCUI" #carnetCUI='ngModel' [(ngModel)]="usuarioIDModel.carnetCUI" disabled>
+                    </div>
+                    <!-- NOMBRES -->
+                    <div class="mb-3">
+                        <label for="inputNombres2" class="form-label">Nombres</label>
+                        <input type="text" class="form-control" id="inputNombres2" name="nombres" #nombres='ngModel' [(ngModel)]="usuarioIDModel.nombres" disabled>
+                    </div>
+                    <!-- APELLIDOS -->
+                    <div class="mb-3">
+                        <label for="inputApellidos2" class="form-label">Apellidos</label>
+                        <input type="text" class="form-control" id="inputApellidos2" name="apellidos" #apellidos='ngModel' [(ngModel)]="usuarioIDModel.apellidos" disabled>
+                    </div>
+                    <!-- USERNAME -->
+                    <div class="mb-3">
+                        <label for="inputUsername2" class="form-label">Username</label>
+                        <input type="text" class="form-control" id="inputUsername2" name="username" #username='ngModel' [(ngModel)]="usuarioIDModel.username" disabled>
+                    </div>
+                    <!-- ROL -->
+                    <div class="mb-3">
+                        <label for="inputRol2" class="form-label">Rol</label>
+                        <input type="text" class="form-control" id="inputRol2" name="rol" #rol='ngModel' [(ngModel)]="usuarioIDModel.rol" disabled>
+                    </div>
+                    <!-- CORREO -->
+                    <div class="mb-3">
+                        <label for="inputCorreo2" class="form-label">Correo</label>
+                        <input type="email" class="form-control" id="inputCorreo2" name="email" #email='ngModel' [(ngModel)]="usuarioIDModel.email" disabled>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#emergenteEliminar">Eliminar</button>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL EMERGENTE ELIMINAR USUARIO -->
+<div class="modal fade" id="emergenteEliminar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Confirmación de eliminación</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                ¿Está seguro de eliminar el usuario "<strong>{{ usuarioIDModel.username }}</strong>"?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-bs-dismiss="modal" (click)='eliminarUsuario(usuarioIDModel._id)'>Eliminar</button>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
